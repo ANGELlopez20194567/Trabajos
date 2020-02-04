@@ -5,13 +5,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
+        <title>avion</title>
         <link rel="stylesheet" href="./css/bootstrap.min.css">
         <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
         <link rel="stylesheet" type="text/css" href="hoja2.css">
     </head>
 
     <body>
+
+        <head>
+            <h1 class="text-center">Areolinas ARAIZA</h1>
+        </head>
         <div id="app">
             <!--
             <button @click.prevent="agregar()">g</button>
@@ -22,8 +26,30 @@
             <span class="badge badge-success">descuento: ${{descuento}}<br></span>
             <span class="badge badge-info"> Total del vuelo: ${{descuento_appicado}}</span>
             <table style="left:550px; position: relative;">
+                <td style="margin: 0;
+            padding: 0;
+            list-style: none;">
+
+                    <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 60 && ASIENTO2.costo <= 200" class="list-group-item" style=" padding-top: 10px;">
+                        {{index}}
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
+                    </th>
+                </td>
+
+                <td style="margin: 0;
+            padding: 0;
+            list-style: none;">
+
+                    <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 200 && ASIENTO2.costo <= 400" class="list-group-item" style=" padding-top: 10px;">
+                        {{index}}
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
+                    </th>
+                </td>
                 <td style="margin: 0;padding: 0;list-style: none;">
                     <th v-for="(ASIENTO1,index) in ASIENTOS" v-if="ASIENTO1.costo <= 60" class="list-group-item" style=" padding-top: 10px;">
+                        {{index}}
                         <a @click.prevent="cambiar(index)"><img v-if="ASIENTO1.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
                         <a @click.prevent="cambiar(index)"><img v-if="ASIENTO1.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
                     </th>
@@ -31,23 +57,10 @@
                 <td style="margin: 0;
             padding: 0;
             list-style: none;">
-                    <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 60 && ASIENTO2.costo <= 200" class="list-group-item" style=" padding-top: 10px;">
-                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
-                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
-                    </th>
-                </td>
-                <td style="margin: 0;
-            padding: 0;
-            list-style: none;">
-                    <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 200 && ASIENTO2.costo <= 400" class="list-group-item" style=" padding-top: 10px;">
-                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
-                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
-                    </th>
-                </td>
-                <td style="margin: 0;
-            padding: 0;
-            list-style: none;">
+
+
                     <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 400 && ASIENTO2.costo <= 700" class="list-group-item" style=" padding-top: 10px;">
+                        {{index}}
                         <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
                         <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
                     </th>
@@ -55,7 +68,9 @@
                 <td style="margin: 0;
             padding: 0;
             list-style: none;">
+
                     <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 700 && ASIENTO2.costo <= 800" class="list-group-item" style=" padding-top: 10px;">
+                        {{index}}
                         <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
                         <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
                     </th>
@@ -63,7 +78,9 @@
                 <td style="margin: 0;
             padding: 0;
             list-style: none;">
+
                     <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 800 && ASIENTO2.costo <= 900" class="list-group-item" style=" padding-top: 10px;">
+                        {{index}}
                         <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
                         <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
                     </th>
