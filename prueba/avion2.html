@@ -1,0 +1,187 @@
+<DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+        <link rel="stylesheet" type="text/css" href="hoja2.css">
+    </head>
+
+    <body>
+        <div id="app">
+            <!--
+            <button @click.prevent="agregar()">g</button>
+            -->
+            <span class="badge badge-primary">Toatal parcial: ${{precio_final}}</span>
+            <span class="badge badge-warning">iva aregado: ${{iva_}}</span>
+            <span class="badge badge-secondary"> precio con iva: ${{iva2}}</span>
+            <span class="badge badge-success">descuento: ${{descuento}}<br></span>
+            <span class="badge badge-info"> Total del vuelo: ${{descuento_appicado}}</span>
+            <table style="left:550px; position: relative;">
+                <td style="margin: 0;padding: 0;list-style: none;">
+                    <th v-for="(ASIENTO1,index) in ASIENTOS" v-if="ASIENTO1.costo <= 60" class="list-group-item" style=" padding-top: 10px;">
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO1.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO1.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
+                    </th>
+                </td>
+                <td style="margin: 0;
+            padding: 0;
+            list-style: none;">
+                    <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 60 && ASIENTO2.costo <= 200" class="list-group-item" style=" padding-top: 10px;">
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
+                    </th>
+                </td>
+                <td style="margin: 0;
+            padding: 0;
+            list-style: none;">
+                    <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 200 && ASIENTO2.costo <= 400" class="list-group-item" style=" padding-top: 10px;">
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
+                    </th>
+                </td>
+                <td style="margin: 0;
+            padding: 0;
+            list-style: none;">
+                    <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 400 && ASIENTO2.costo <= 700" class="list-group-item" style=" padding-top: 10px;">
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
+                    </th>
+                </td>
+                <td style="margin: 0;
+            padding: 0;
+            list-style: none;">
+                    <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 700 && ASIENTO2.costo <= 800" class="list-group-item" style=" padding-top: 10px;">
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
+                    </th>
+                </td>
+                <td style="margin: 0;
+            padding: 0;
+            list-style: none;">
+                    <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.costo > 800 && ASIENTO2.costo <= 900" class="list-group-item" style=" padding-top: 10px;">
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                        <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
+                    </th>
+                </td>
+            </table>
+        </div>
+        <script src="./js/vue.js"></script>
+        <script>
+            const vue = new Vue({
+                el: '#app',
+                data: {
+                    ASIENTOS: [],
+                    datos: [],
+                    index: 0,
+                    libre: "asiento_libre.png",
+                    nolibre: "asiento_reservado.png",
+                    precio_final: 0,
+                    iva_: 0,
+                    iva2: 0,
+                    descuento: 0,
+                    descuento_appicado: 0,
+                },
+                created() {
+                    let serviciosDB = JSON.parse(localStorage.getItem('f'));
+                    let serviciosDB2 = JSON.parse(localStorage.getItem('serv'));
+                    if (serviciosDB == null) {
+                        this.servicios = [];
+                        this.precio_final = [];
+                        console.log("contenido vacio " + this.ASIENTOS);
+                    } else {
+                        this.ASIENTOS = serviciosDB;
+                        this.precio_final = serviciosDB2;
+                    }
+                    localStorage.setItem('f', JSON.stringify(this.ASIENTOS))
+                    localStorage.setItem('serv', JSON.stringify(this.precio_final))
+                },
+                methods: {
+                    cambiar(index) {
+                        this.index = index;
+                        console.log(index);
+                        if (this.ASIENTOS[index].estatus == 0) {
+                            this.ASIENTOS[index].estatus = 1;
+                            this.precio_final = this.precio_final + this.ASIENTOS[index].costo;
+                            this.datos.push(
+                                this.precio_final
+                            );
+                        } else {
+                            this.ASIENTOS[index].estatus = 0;
+                            if (this.precio_final === 0) {} else {
+                                this.precio_final = this.precio_final - this.ASIENTOS[index].costo;
+                            }
+                        }
+                        localStorage.setItem(
+                            'serv', JSON.stringify(this.precio_final)
+                        );
+                        localStorage.setItem(
+                            'f', JSON.stringify(this.ASIENTOS)
+                        );
+                        this.iva();
+                    },
+                    agregar() {
+                        for (let j = 0; j < 60; j++) {
+                            if (j < 10) {
+                                this.ASIENTOS.push({
+                                    costo: 200,
+                                    estatus: 1
+                                });
+                            }
+                            if (j > 10 && j < 20) {
+                                this.ASIENTOS.push({
+                                    costo: 400,
+                                    estatus: 1
+                                });
+                            }
+                            if (j > 20 && j < 30) {
+                                this.ASIENTOS.push({
+                                    costo: 60,
+                                    estatus: 1
+                                });
+                            }
+                            if (j > 30 && j < 40) {
+                                this.ASIENTOS.push({
+                                    costo: 700,
+                                    estatus: 1
+                                });
+                            }
+                            if (j > 40 && j < 50) {
+                                this.ASIENTOS.push({
+                                    costo: 800,
+                                    estatus: 1
+                                });
+                            }
+                            if (j > 50 && j <= 60) {
+                                this.ASIENTOS.push({
+                                    costo: 900,
+                                    estatus: 1
+                                });
+                            }
+                        }
+                        localStorage.setItem(
+                            'f', JSON.stringify(this.ASIENTOS)
+                        );
+                    },
+                    iva() {
+                        this.iva_ = Math.round((this.precio_final * 1.6) / 100);
+                        this.iva2 = Math.round(this.precio_final + this.iva_);
+                        if (this.precio_final == 0) {
+                            this.descuento = 0;
+                            this.descuento_appicado = 0;
+                        } else {
+                            this.descuento = Math.round(this.iva2 * .099);
+                            this.descuento_appicado = Math.round(this.iva2 - this.descuento);
+                        }
+                    }
+                },
+
+            })
+        </script>
+    </body>
+
+    </html>
