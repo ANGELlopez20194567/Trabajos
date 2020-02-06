@@ -5,3 +5,8 @@ li {
 ul {
     width: 500px;
 }
+
+body {
+    background-image: url("/imagenes/avion.png");
+    background-repeat: no-repeat;
+}
