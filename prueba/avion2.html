@@ -75,7 +75,7 @@
             list-style: none;">
                         <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.id >= 31 && ASIENTO2.id <= 60" class="list-group-item" style=" padding-top: 10px;">
                             {{index +1}}
-                            <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                            <a @click.prevent="cambiar(index)"><img :title="ASIENTO2.nom" v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
                             <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
                         </th>
                     </td>
@@ -84,7 +84,7 @@
             list-style: none;">
                         <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.id >= 61 && ASIENTO2.id <= 90" class="list-group-item" style=" padding-top: 10px;">
                             {{index +1}}
-                            <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                            <a @click.prevent="cambiar(index)"><img :title="ASIENTO2.nom" v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
                             <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
                         </th>
                     </td>
@@ -100,7 +100,7 @@
             list-style: none;">
                         <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.id >= 91 && ASIENTO2.id <= 120" class="list-group-item" style=" padding-top: 10px;">
                             {{index +1}}
-                            <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                            <a @click.prevent="cambiar(index)"><img :title="ASIENTO2.nom" v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
                             <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
                         </th>
                     </td>
@@ -109,7 +109,7 @@
             list-style: none;">
                         <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.id >= 121 && ASIENTO2.id <= 150" class="list-group-item" style=" padding-top: 10px;">
                             {{index +1}}
-                            <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                            <a @click.prevent="cambiar(index)"><img :title="ASIENTO2.nom" v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
                             <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
                         </th>
                     </td>
@@ -118,7 +118,7 @@
             list-style: none;">
                         <th v-for="(ASIENTO2,index) in ASIENTOS" v-if="ASIENTO2.id >= 151 && ASIENTO2.id <= 180" class="list-group-item" style=" padding-top: 10px;">
                             {{index +1}}
-                            <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
+                            <a @click.prevent="cambiar(index)"><img :title="ASIENTO2.nom" v-if="ASIENTO2.estatus == 1" v-bind:src="'imagenes/'+libre" width="50" height="50"></a>
                             <a @click.prevent="cambiar(index)"><img v-if="ASIENTO2.estatus == 0" v-bind:src="'imagenes/'+nolibre" width="50" height="50"></a>
                         </th>
                     </td>
@@ -169,10 +169,15 @@
                         console.log(index);
                         if (this.ASIENTOS[index].estatus == 0) {
                             this.ASIENTOS[index].estatus = 1;
-                            this.precio_final = this.precio_final + this.ASIENTOS[index].costo;
-                            this.datos.push(
-                                this.precio_final
-                            );
+                            if (this.ASIENTOS[index].nom !== '') {
+
+                            } else {
+                                this.precio_final = this.precio_final + this.ASIENTOS[index].costo;
+                                this.datos.push(
+                                    this.precio_final
+                                );
+                            }
+
                         } else {
                             if (this.ASIENTOS[index].nom !== '') {
 
@@ -267,12 +272,17 @@
                             if (this.ASIENTOS[j].estatus == 1) {
                                 if (this.ASIENTOS[j].nom == '') {
                                     this.ASIENTOS[j].nom = this.var_mo;
+                                    this.precio_final = 0;
+                                    this.datos = [];
                                 } else {
 
                                 }
                             }
                         }
                         localStorage.setItem('f', JSON.stringify(this.ASIENTOS));
+                        localStorage.setItem(
+                            'serv', JSON.stringify(this.precio_final)
+                        );
                         this.q = 1;
                         this.w = 0;
                     }
